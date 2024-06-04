@@ -26,7 +26,7 @@ class UserModel(BaseModel, DateMixin):
     last_name: Mapped[str50]
     middle_name: Mapped[Optional[str50]]
 
-    is_active: Mapped[bool]
+    is_active: Mapped[bool] = mapped_column(server_default="True", default=True)
 
     refresh_token: Mapped[str50] = mapped_column(nullable=True)
 

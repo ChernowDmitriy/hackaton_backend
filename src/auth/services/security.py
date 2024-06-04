@@ -82,6 +82,7 @@ class JWTBearer(HTTPBearer):
         self.WHITE_LIST = [
             "/api/v1/auth/login",
             "/api/v1/auth/refresh_token",
+            "/api/v1/auth/register",
             "/api/v1/docs",
             "/api/v1/files/*"
         ]

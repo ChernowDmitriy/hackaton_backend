@@ -28,7 +28,7 @@ class UserUpdater(Protocol):
 
 class UserCreator(Protocol):
     @abstractmethod
-    async def create_user(self, *args, **kwargs) -> Type[UserModel]:
+    async def create_user(self, *args, **kwargs) -> UserModel:
         ...
 
 

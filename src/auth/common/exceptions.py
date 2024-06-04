@@ -26,3 +26,8 @@ AccessForbiddenException = BaseHTTPException(
     msg="Доступ запрещен",
     status_code=status.HTTP_403_FORBIDDEN
 )
+
+UserAlreadyExistsException = BaseHTTPException(
+    msg="Пользователь с такой почтой уже зарегистрирован",
+    status_code=status.HTTP_400_BAD_REQUEST
+)

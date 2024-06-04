@@ -11,6 +11,7 @@ from core.db.models.role import RoleModel
 from core.db.models.user import UserModel
 from src.auth.common.interfacies.user_protocol import UserContainer
 from src.auth.common.schemas import PartialUserUpdateSchema
+from src.auth.web.api.auth.schemas import UserRegisterSchema
 
 
 class UserRepository(UserContainer):
@@ -57,3 +58,13 @@ class UserRepository(UserContainer):
         )
 
         return query.scalar_one_or_none()
+
+    async def create_user(self, data: UserRegisterSchema) -> UserModel:
+        """
+        Creating a user object and add to UoW store
+        :param data: UserRegisterSchema
+        :return: UserModel
+        """
+        user = UserModel(**data.model_dump())
+        self.session.add(user)
+        return user
