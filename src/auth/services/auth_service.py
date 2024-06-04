@@ -1,11 +1,12 @@
 from src.auth.common.exceptions import LoginFailedException, RefreshTokenFailedException
+from src.auth.common.interfacies.auth_protocol import AuthorizationProtocol
 from src.auth.common.interfacies.user_protocol import UserContainer
-from src.auth.common.schemas import PartialUserUpdateSchema
+from src.auth.common.schemas import PartialUserUpdateSchema, TokenSchema
 from src.auth.services.security import SecurityService, JWTGrantType
 from src.auth.web.api.auth.schemas import UserLoginSchema, RefreshTokenSchema
 
 
-class AuthService:
+class AuthService(AuthorizationProtocol):
     def __init__(
         self,
         user_repo: UserContainer,
@@ -13,7 +14,7 @@ class AuthService:
         self.security_service = SecurityService()
         self.user_repo = user_repo
 
-    async def authorize(self, data: UserLoginSchema):
+    async def authorize(self, data: UserLoginSchema) -> TokenSchema:
         user = await self.user_repo.get_user_by_email(data.email)
 
         if user is None:
@@ -61,3 +62,6 @@ class AuthService:
         )
         await self.user_repo.session.commit()
         return auth_tokens
+
+    async def register(self, *args, **kwargs):
+        pass
