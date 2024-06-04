@@ -7,7 +7,7 @@ from fastapi import Request
 from jwt import DecodeError, ExpiredSignatureError
 from passlib.context import CryptContext
 
-from core.settings import settings
+from core.settings import get_settings
 from src.auth.common.exceptions import (SignatureVerificationFailed,
                                         AccessForbiddenException)
 from src.auth.common.schemas import TokenSchema
@@ -21,14 +21,14 @@ class JWTGrantType(str, Enum):
 
 class SecurityService:
     pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+    settings = get_settings()
 
-    @staticmethod
-    def create_auth_tokens(user: UserModel) -> TokenSchema:
+    def create_auth_tokens(self, user: UserModel) -> TokenSchema:
         exp_access = datetime.utcnow() + timedelta(
-            minutes=settings.access_token_expire,
+            minutes=self.settings.ACCESS_TOKEN_EXPIRE,
         )
         exp_refresh = datetime.utcnow() + timedelta(
-            minutes=settings.refresh_token_expire,
+            minutes=self.settings.REFRESH_TOKEN_EXPIRE,
         )
         iat = datetime.utcnow()
 
@@ -47,12 +47,12 @@ class SecurityService:
         }
         access_token = jwt.encode(
             access_token_payload,
-            settings.JWT_SECRET_KEY,
+            self.settings.JWT_SECRET_KEY,
             algorithm="HS256",
         )
         refresh_token = jwt.encode(
             refresh_token_payload,
-            settings.JWT_SECRET_KEY,
+            self.settings.JWT_SECRET_KEY,
             algorithm="HS256",
         )
         return TokenSchema(
@@ -67,10 +67,9 @@ class SecurityService:
     def verify_password(self, password: str, hashed_password: str) -> bool:
         return self.pwd_context.verify(password, hashed_password)
 
-    @staticmethod
-    def verify_token(token: str) -> dict:
+    def verify_token(self, token: str) -> dict:
         try:
-            payload = jwt.decode(token, settings.JWT_SECRET_KEY, algorithms="HS256")
+            payload = jwt.decode(token, self.settings.JWT_SECRET_KEY, algorithms="HS256")
             return payload
         except (ExpiredSignatureError, DecodeError):
             raise SignatureVerificationFailed
@@ -90,7 +89,7 @@ class JWTBearer(HTTPBearer):
     async def __call__(self, request: Request):
         for pattern in self.WHITE_LIST:
             if (pattern.endswith("*") and request.url.path.startswith(pattern[:-1]) or
-                request.url.path in self.WHITE_LIST):
+                    request.url.path in self.WHITE_LIST):
                 return
         credentials: HTTPAuthorizationCredentials = await super(
             JWTBearer, self).__call__(request)
@@ -103,9 +102,3 @@ class JWTBearer(HTTPBearer):
             raise AccessForbiddenException
         request.state.user_id = user_id
         return credentials
-
-
-def auth(request):
-    if request.url.path in WHITE_LIST:
-        return
-    # some auth logic

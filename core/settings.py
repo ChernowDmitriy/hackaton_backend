@@ -32,6 +32,7 @@ class Settings(BaseSettings):
     PORT: int
     WORKERS: int
     RELOAD: bool
+    ENVIRONMENT: str
 
     # Database
     DB_HOST: str
@@ -41,14 +42,12 @@ class Settings(BaseSettings):
     DB_BASE: str
     DB_ECHO: bool
 
-    ENVIRONMENT: str = "dev"
-
     # Auth
     ACCESS_TOKEN_EXPIRE: int = 5
     REFRESH_TOKEN_EXPIRE: int = 60 * 24 * 30  # 30 days
 
     # Security
-    JWT_SECRET_KEY: str = "Gutyug^&GUYT*96yuityur6543tyrftTR^&*J"
+    JWT_SECRET_KEY: str
 
     @property
     def db_url(self) -> URL:

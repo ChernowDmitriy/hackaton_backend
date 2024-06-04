@@ -15,7 +15,7 @@ router = APIRouter()
 
 
 @router.post(
-    "/auth",
+    "/login",
     response_model=SuccessLoginSchema,
     summary="Authorization",
 )
