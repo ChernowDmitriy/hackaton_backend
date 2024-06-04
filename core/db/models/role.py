@@ -4,7 +4,7 @@ from typing import Annotated, List
 from sqlalchemy import ForeignKey, func, Table, Column
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-from core.db.base import BaseModel, DateMixin, str50
+from core.db.base import BaseModel, DateMixin, str50, guid
 from core.db.models.user import user_role_model
 
 role_permission_model = Table(
@@ -18,15 +18,7 @@ role_permission_model = Table(
 class PermissionModel(BaseModel, DateMixin):
     __tablename__ = "permissions"
 
-    id: Mapped[
-        Annotated[
-            uuid.UUID,
-            mapped_column(
-                server_default=func.gen_random_uuid(),
-                primary_key=True,
-            ),
-        ]
-    ]
+    id: Mapped[guid]
 
     name: Mapped[str50]
 

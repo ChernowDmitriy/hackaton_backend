@@ -6,7 +6,8 @@ RUN apt-get update && apt-get install -y \
 
 WORKDIR /app/src
 
-# Installing requirements
+# Copying and installing requirements
+COPY requirements.txt /app/src/
 RUN pip install -r requirements.txt
 
 # Removing gcc

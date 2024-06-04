@@ -1,10 +1,10 @@
 import uuid
-from typing import Annotated, Optional, List
+from typing import Optional, List
 
-from sqlalchemy import ForeignKey, func, Table, Column
+from sqlalchemy import ForeignKey, Table, Column
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-from core.db.base import BaseModel, DateMixin, str50, str100
+from core.db.base import BaseModel, DateMixin, str50, str100, guid
 
 user_role_model = Table(
     "user_roles",
@@ -17,26 +17,15 @@ user_role_model = Table(
 class UserModel(BaseModel, DateMixin):
     __tablename__ = "users"
 
-    id: Mapped[
-        Annotated[
-            uuid.UUID,
-            mapped_column(
-                server_default=func.gen_random_uuid(),
-                primary_key=True,
-            ),
-        ]
-    ]
+    id: Mapped[guid]
 
     email: Mapped[str100]
-    login: Mapped[str100]
     password: Mapped[str50]
 
     first_name: Mapped[str50]
     last_name: Mapped[str50]
     middle_name: Mapped[Optional[str50]]
 
-    company_id: Mapped[uuid.UUID]
-    position: Mapped[str100]
     is_active: Mapped[bool]
 
     refresh_token: Mapped[str50] = mapped_column(nullable=True)

@@ -7,7 +7,9 @@ from sqlalchemy.future import Connection
 
 from core.db.base import BaseModel
 from core.db.models import load_all_models
-from core.settings import settings
+from core.settings import get_settings
+
+settings = get_settings()
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
@@ -61,10 +63,7 @@ def do_run_migrations(connection: Connection) -> None:
 
     :param connection: connection to the database.
     """
-    context.configure(connection=connection,
-                      target_metadata=target_metadata,
-                      version_table_schema=target_metadata.schema,
-                      include_schemas=True)
+    context.configure(connection=connection, target_metadata=target_metadata)
 
     with context.begin_transaction():
         context.run_migrations()

@@ -11,7 +11,3 @@ class FileModel(BaseModel, DateMixin):
     path: Mapped[str]
     ext: Mapped[str]
     byte_size: Mapped[int]
-
-    @property
-    def create_url(self) -> str:
-        return f"/files/{self.path.split('/')[-1]}"
