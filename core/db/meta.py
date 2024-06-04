@@ -1,3 +1,3 @@
 import sqlalchemy as sa
 
-meta = sa.MetaData(schema="main")
+meta = sa.MetaData(schema="public")

@@ -2,21 +2,22 @@ from sqlalchemy import text
 from sqlalchemy.engine import make_url
 from sqlalchemy.ext.asyncio import create_async_engine
 
-from core.settings import settings
+from core.settings import get_settings
 
 
 async def create_database() -> None:
     """Create a database."""
+    settings = get_settings()
     db_url = make_url(str(settings.db_url.with_path("/postgres")))
     engine = create_async_engine(db_url, isolation_level="AUTOCOMMIT")
 
     async with engine.connect() as conn:
-        database_existance = await conn.execute(
+        database_existence = await conn.execute(
             text(
                 f"SELECT 1 FROM pg_database WHERE datname='{settings.db_base}'",  # noqa: E501, S608
             ),
         )
-        database_exists = database_existance.scalar() == 1
+        database_exists = database_existence.scalar() == 1
 
     if database_exists:
         await drop_database()
@@ -31,6 +32,7 @@ async def create_database() -> None:
 
 async def drop_database() -> None:
     """Drop current database."""
+    settings = get_settings()
     db_url = make_url(str(settings.db_url.with_path("/postgres")))
     engine = create_async_engine(db_url, isolation_level="AUTOCOMMIT")
     async with engine.connect() as conn:

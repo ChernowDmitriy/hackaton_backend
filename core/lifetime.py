@@ -5,7 +5,7 @@ from sqlalchemy.ext.asyncio import async_sessionmaker, create_async_engine
 
 from core.db.meta import meta
 from core.db.models import load_all_models
-from core.settings import settings
+from core.settings import get_settings
 
 
 def _setup_db(app: FastAPI) -> None:  # pragma: no cover
@@ -18,6 +18,7 @@ def _setup_db(app: FastAPI) -> None:  # pragma: no cover
 
     :param app: fastAPI application.
     """
+    settings = get_settings()
     engine = create_async_engine(str(settings.db_url), echo=settings.db_echo)
     session_factory = async_sessionmaker(
         engine,
@@ -30,6 +31,7 @@ def _setup_db(app: FastAPI) -> None:  # pragma: no cover
 async def _create_tables() -> None:  # pragma: no cover
     """Populates tables in the database."""
     load_all_models()
+    settings = get_settings()
     engine = create_async_engine(str(settings.db_url))
     async with engine.begin() as connection:
         await connection.run_sync(meta.create_all)
@@ -52,11 +54,7 @@ def register_startup_event(
     @app.on_event("startup")
     async def _startup() -> None:  # noqa: WPS430
         app.middleware_stack = None
-        # if not broker.is_worker_process:
-        #     await broker.startup()
         _setup_db(app)
-        # await _create_tables()
-        # init_rabbit(app)
         app.middleware_stack = app.build_middleware_stack()
         pass  # noqa: WPS420
 
@@ -75,11 +73,7 @@ def register_shutdown_event(
 
     @app.on_event("shutdown")
     async def _shutdown() -> None:  # noqa: WPS430
-        # if not broker.is_worker_process:
-        #     await broker.shutdown()
         await app.state.db_engine.dispose()
-
-        # await shutdown_rabbit(app)
         pass  # noqa: WPS420
 
     return _shutdown

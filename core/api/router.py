@@ -1,8 +1,7 @@
 from fastapi.routing import APIRouter
 
-from core.api import docs, statics
+from core.api import docs
 
 core_router = APIRouter()
 
 core_router.include_router(docs.router)
-core_router.include_router(statics.router)

@@ -1,11 +1,12 @@
 import uvicorn
 
 from core.gunicorn_runner import GunicornApplication
-from core.settings import settings
+from core.settings import get_settings
 
 
 def main() -> None:
     """Entrypoint of the application."""
+    settings = get_settings()
     if settings.reload:
         uvicorn.run(
             "core.application:get_app",
