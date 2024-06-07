@@ -33,6 +33,7 @@ class Settings(BaseSettings):
     WORKERS: int
     RELOAD: bool
     ENVIRONMENT: str
+    API_PREFIX: str = "/api/v1"
 
     # Database
     DB_HOST: str
