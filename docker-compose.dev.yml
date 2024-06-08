@@ -36,20 +36,21 @@ services:
 #      - ./nginx/certs/privkey.pem:/etc/privkey.pem
     depends_on:
       - api
+#      - certbot
 
-  certbot:
-    ports:
-      - "6000:80"
-    env_file:
-      - ./certbot/.env
-    volumes:
-      - ./nginx/:/etc/nginx/
-    build:
-      context: ./certbot
-      dockerfile: Dockerfile
-      args:
-        DOMAIN_EMAIL: ${DOMAIN_EMAIL}
-        DOMAIN_URL: ${DOMAIN_URL}
+#  certbot:
+#    ports:
+#      - "6000:80"
+#    env_file:
+#      - ./certbot/.env
+#    volumes:
+#      - ./nginx/:/etc/nginx/
+#    build:
+#      context: ./certbot
+#      dockerfile: Dockerfile
+#      args:
+#        DOMAIN_EMAIL: ${DOMAIN_EMAIL}
+#        DOMAIN_URL: ${DOMAIN_URL}
 
 volumes:
   postgres_data:
