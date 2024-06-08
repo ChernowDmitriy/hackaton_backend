@@ -32,8 +32,8 @@ services:
       - "443:443"
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
-      - ./nginx/certs/fullchain.pem:/etc/fullchain.pem
-      - ./nginx/certs/privkey.pem:/etc/privkey.pem
+#      - ./nginx/certs/fullchain.pem:/etc/fullchain.pem
+#      - ./nginx/certs/privkey.pem:/etc/privkey.pem
     depends_on:
       - api
 
@@ -41,7 +41,7 @@ services:
     ports:
       - "6000:80"
     env_file:
-      - .env
+      - ./certbot/.env
     volumes:
       - ./nginx/:/etc/nginx/
     build:
