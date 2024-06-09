@@ -1,7 +1,8 @@
 version: "3.8"
 
 services:
-  api:
+  api: &main_app
+    container_name: api
     ports:
       - "8000:8000"
     build:
@@ -12,10 +13,32 @@ services:
     volumes:
       - .:/app/src/
     depends_on:
-      - db
+      rabbitmq:
+        condition: service_healthy
+
+  rabbitmq:
+    image: 'rabbitmq:3.6-management-alpine'
+    container_name: rabbitmq
+    restart: always
+    healthcheck:
+      test: [ "CMD", "rabbitmqctl", "status" ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    env_file:
+      - .env
+    environment:
+      - RABBITMQ_DEFAULT_USER=friendly_user
+      - RABBITMQ_DEFAULT_PASS=123456Aa
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
 
   db:
     image: postgres:16
+    container_name: db
     ports:
       - "15432:5432"
     environment:
@@ -54,3 +77,4 @@ services:
 
 volumes:
   postgres_data:
+  rabbitmq_data:

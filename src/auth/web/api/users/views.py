@@ -12,7 +12,7 @@ router = APIRouter()
 @router.get(
     "/users/me",
     response_model=RetrieveUserByIDSchema,
-    summary="Получить информацию о пользователе по ID",
+    summary="Получить информацию о пользователе по токену",
 )
 async def get_user_by_id(
     request: Request,

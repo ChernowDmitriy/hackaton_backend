@@ -33,6 +33,7 @@ class Settings(BaseSettings):
     WORKERS: int
     RELOAD: bool
     ENVIRONMENT: str
+    API_PREFIX: str = "/api/v1"
 
     # Database
     DB_HOST: str
@@ -41,6 +42,13 @@ class Settings(BaseSettings):
     DB_PASS: str
     DB_BASE: str
     DB_ECHO: bool
+
+    # RABBITMQ
+    RABBIT_HOST: str
+    RABBIT_PORT: int
+    RABBIT_USER: str
+    RABBIT_PASS: str
+    RABBIT_VHOST: str = '/'
 
     # Auth
     ACCESS_TOKEN_EXPIRE: int = 5
@@ -63,6 +71,22 @@ class Settings(BaseSettings):
             user=self.DB_USER,
             password=self.DB_PASS,
             path=f"/{self.DB_BASE}",
+        )
+
+    @property
+    def rabbit_url(self) -> URL:
+        """
+        Assemble RabbitMQ URL from settings.
+
+        :return: rabbit URL.
+        """
+        return URL.build(
+            scheme="amqp",
+            host=self.RABBIT_HOST,
+            port=self.RABBIT_PORT,
+            user=self.RABBIT_USER,
+            password=self.RABBIT_PASS,
+            # path=self.RABBIT_VHOST,
         )
 
     model_config = SettingsConfigDict(

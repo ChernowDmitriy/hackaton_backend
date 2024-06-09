@@ -1,4 +1,3 @@
-"""IR_Test models."""
 import pkgutil
 from pathlib import Path
 
