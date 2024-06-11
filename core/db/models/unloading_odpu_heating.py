@@ -8,7 +8,7 @@ from sqlalchemy.orm import Mapped, mapped_column
 from core.db.base import BaseModel, bigint_pk
 
 
-class UnloadingOdpuHeating(BaseModel):
+class UnloadingOdpuHeatingModel(BaseModel):
     __tablename__ = "unloading_odpu_heating"
 
     id_uu: Mapped[bigint_pk]
