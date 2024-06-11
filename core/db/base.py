@@ -27,7 +27,7 @@ updated_at = Annotated[
 str50 = Annotated[str, VARCHAR(100)]
 str100 = Annotated[str, VARCHAR(100)]
 str256 = Annotated[str, VARCHAR(256)]
-bigint = Annotated[
+bigint_pk = Annotated[
     int,
     mapped_column(BIGINT,
                   autoincrement=True,

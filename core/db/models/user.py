@@ -2,13 +2,13 @@ from typing import Optional
 
 from sqlalchemy.orm import Mapped, mapped_column
 
-from core.db.base import BaseModel, DateMixin, str50, str100, bigint
+from core.db.base import BaseModel, DateMixin, str50, str100, bigint_pk
 
 
 class UserModel(BaseModel, DateMixin):
     __tablename__ = "users"
 
-    id: Mapped[bigint]
+    id: Mapped[bigint_pk]
 
     email: Mapped[str100]
     password: Mapped[str50]
