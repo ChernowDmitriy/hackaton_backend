@@ -4,12 +4,13 @@
 from sqlalchemy import DOUBLE_PRECISION
 from sqlalchemy.orm import Mapped, mapped_column
 
-from core.db.base import BaseModel
+from core.db.base import BaseModel, bigint_pk
 
 
 class SocialFacilitiesEfficiencyEnergyModel(BaseModel):
     __tablename__ = "social_facilities_efficiency_energies"
 
+    id: Mapped[bigint_pk]
     building: Mapped[str]
     count_buildings: Mapped[int]
     total_area: Mapped[float]
