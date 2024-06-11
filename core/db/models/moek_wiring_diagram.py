@@ -1,3 +1,7 @@
+"""
+7. Схема подключений МОЭК
+"""
+
 from sqlalchemy.orm import Mapped
 
 from core.db.base import BaseModel, bigint_pk, date_with_timezone

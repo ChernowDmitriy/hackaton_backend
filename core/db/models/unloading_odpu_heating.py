@@ -1,4 +1,6 @@
-import datetime
+"""
+11.Выгрузка_ОДПУ_отопление_ВАО_20240522
+"""
 
 from sqlalchemy import BIGINT, DOUBLE_PRECISION
 from sqlalchemy.orm import Mapped, mapped_column

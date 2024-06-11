@@ -1,3 +1,7 @@
+"""
+6. Плановые-Внеплановые отключения 01.10.2023-30.04.2023
+"""
+
 from sqlalchemy import BIGINT
 from sqlalchemy.orm import Mapped, mapped_column
 

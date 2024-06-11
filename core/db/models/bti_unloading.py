@@ -1,3 +1,7 @@
+"""
+9. Выгрузка БТИ
+"""
+
 from sqlalchemy import BIGINT
 from sqlalchemy.orm import Mapped, mapped_column
 

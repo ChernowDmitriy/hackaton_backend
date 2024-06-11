@@ -1,3 +1,7 @@
+"""
+8. Данные АСУПР с диспетчерскими ОДС
+"""
+
 from sqlalchemy import BIGINT
 from sqlalchemy.orm import Mapped, mapped_column
 

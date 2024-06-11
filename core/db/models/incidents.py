@@ -1,3 +1,8 @@
+"""
+События за период_01.01.2024-30.04.2024
+События за период_01.10.2023-31.12.2023
+"""
+
 from sqlalchemy import BIGINT
 from sqlalchemy.orm import Mapped, mapped_column
 
