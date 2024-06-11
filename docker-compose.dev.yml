@@ -13,8 +13,10 @@ services:
     volumes:
       - .:/app/src/
     depends_on:
-      rabbitmq:
-        condition: service_healthy
+      - db
+#    depends_on:
+#      rabbitmq:
+#        condition: service_healthy
 
 #  rabbitmq:
 #    image: 'rabbitmq:3.6-management-alpine'
@@ -77,4 +79,4 @@ services:
 
 volumes:
   postgres_data:
-  rabbitmq_data:
+#  rabbitmq_data:
