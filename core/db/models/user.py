@@ -1,23 +1,14 @@
-import uuid
-from typing import Optional, List
+from typing import Optional
 
-from sqlalchemy import ForeignKey, Table, Column
-from sqlalchemy.orm import Mapped, mapped_column, relationship
+from sqlalchemy.orm import Mapped, mapped_column
 
-from core.db.base import BaseModel, DateMixin, str50, str100, guid
-
-user_role_model = Table(
-    "user_roles",
-    BaseModel.metadata,
-    Column("user_id", ForeignKey("users.id"), primary_key=True),
-    Column("role_id", ForeignKey("roles.id"), primary_key=True),
-)
+from core.db.base import BaseModel, DateMixin, str50, str100, bigint
 
 
 class UserModel(BaseModel, DateMixin):
     __tablename__ = "users"
 
-    id: Mapped[guid]
+    id: Mapped[bigint]
 
     email: Mapped[str100]
     password: Mapped[str50]
@@ -29,17 +20,3 @@ class UserModel(BaseModel, DateMixin):
     is_active: Mapped[bool] = mapped_column(server_default="True", default=True)
 
     refresh_token: Mapped[str50] = mapped_column(nullable=True)
-
-    roles: Mapped[List["RoleModel"]] = relationship(
-        secondary=user_role_model, back_populates="users"
-    )
-
-
-class UserGroupModel(BaseModel, DateMixin):
-    __tablename__ = "user_groups"
-
-    user_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("users.id"),
-                                               primary_key=True)
-
-    group_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("groups.id"),
-                                                primary_key=True)

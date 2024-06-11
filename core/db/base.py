@@ -1,8 +1,7 @@
 import datetime
-import uuid
 from typing import Annotated
 
-from sqlalchemy import text, VARCHAR, BIGINT, Boolean, func
+from sqlalchemy import text, VARCHAR, BIGINT, Boolean
 from sqlalchemy.dialects.postgresql import TIMESTAMP
 from sqlalchemy.ext.declarative import AbstractConcreteBase
 from sqlalchemy.orm import DeclarativeBase, mapped_column, Mapped
@@ -28,12 +27,12 @@ updated_at = Annotated[
 str50 = Annotated[str, VARCHAR(100)]
 str100 = Annotated[str, VARCHAR(100)]
 str256 = Annotated[str, VARCHAR(256)]
-guid = Annotated[
-    uuid.UUID,
-    mapped_column(
-        server_default=func.gen_random_uuid(),
-        primary_key=True,
-    ),
+bigint = Annotated[
+    int,
+    mapped_column(BIGINT,
+                  autoincrement=True,
+                  primary_key=True,
+                  index=True),
 ]
 
 
