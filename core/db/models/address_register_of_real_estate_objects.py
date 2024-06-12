@@ -9,10 +9,10 @@ class AddressRegisterOfRealEstateObjectsModel(BaseModel):
 
     global_id: Mapped[bigint_pk]
 
-    obj_type: Mapped[str]
-    OnTerritoryOfMoscow: Mapped[bool]
-    address: Mapped[str]
-    unom: Mapped[int] = mapped_column(BIGINT)
+    obj_type: Mapped[str] = mapped_column(nullable=True)
+    OnTerritoryOfMoscow: Mapped[bool] = mapped_column(nullable=True)
+    address: Mapped[str] = mapped_column(nullable=True)
+    unom: Mapped[int] = mapped_column(BIGINT, nullable=True)
     P1: Mapped[str] = mapped_column(nullable=True)
     P3: Mapped[str] = mapped_column(nullable=True)
     P4: Mapped[str] = mapped_column(nullable=True)

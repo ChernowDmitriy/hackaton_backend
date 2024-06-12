@@ -49,6 +49,9 @@ class Settings(BaseSettings):
     RABBIT_USER: str
     RABBIT_PASS: str
     RABBIT_VHOST: str = '/'
+    rabbit_pool_size: int = 10
+    rabbit_channel_pool_size: int = 10
+
 
     # Auth
     ACCESS_TOKEN_EXPIRE: int = 5

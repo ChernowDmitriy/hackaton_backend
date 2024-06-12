@@ -8,11 +8,11 @@ class EconomicCharacteristicHouseModel(BaseModel):
     __tablename__ = "economic_characteristics_houses"
 
     id: Mapped[bigint_pk]
-    name: Mapped[str]
-    address: Mapped[str]
-    unom: Mapped[str]
-    district: Mapped[str]
-    area: Mapped[str]
+    name: Mapped[str] = mapped_column(nullable=True)
+    address: Mapped[str] = mapped_column(nullable=True)
+    unom: Mapped[str] = mapped_column(nullable=True)
+    district: Mapped[str] = mapped_column(nullable=True)
+    area: Mapped[str] = mapped_column(nullable=True)
     col_758: Mapped[int] = mapped_column(BIGINT, nullable=True)
     col_759: Mapped[int] = mapped_column(nullable=True)
     col_760: Mapped[int] = mapped_column(nullable=True)

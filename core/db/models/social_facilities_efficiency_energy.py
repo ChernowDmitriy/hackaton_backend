@@ -11,9 +11,9 @@ class SocialFacilitiesEfficiencyEnergyModel(BaseModel):
     __tablename__ = "social_facilities_efficiency_energies"
 
     id: Mapped[bigint_pk]
-    building: Mapped[str]
-    count_buildings: Mapped[int]
-    total_area: Mapped[float]
+    building: Mapped[str] = mapped_column(nullable=True)
+    count_buildings: Mapped[int] = mapped_column(nullable=True)
+    total_area: Mapped[float] = mapped_column(nullable=True)
     heated_area: Mapped[float] = mapped_column(DOUBLE_PRECISION, nullable=True)
     employees_average_number: Mapped[int] = mapped_column(nullable=True)
     building_type: Mapped[str] = mapped_column(nullable=True)

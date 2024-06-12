@@ -12,20 +12,20 @@ class UnloadingOdpuHeatingModel(BaseModel):
     __tablename__ = "unloading_odpu_heating"
 
     id_uu: Mapped[bigint_pk]
-    id_tu: Mapped[int]
+    id_tu: Mapped[int] = mapped_column(nullable=True)
 
-    area: Mapped[str]
-    district: Mapped[str]
-    consumer: Mapped[str]
-    group: Mapped[str]
-    unom: Mapped[int] = mapped_column(BIGINT)
+    area: Mapped[str] = mapped_column(nullable=True)
+    district: Mapped[str] = mapped_column(nullable=True)
+    consumer: Mapped[str] = mapped_column(nullable=True)
+    group: Mapped[str] = mapped_column(nullable=True)
+    unom: Mapped[int] = mapped_column(BIGINT, nullable=True)
     address: Mapped[str] = mapped_column(nullable=True)
     central_heating: Mapped[str] = mapped_column(nullable=True)
-    meter_brand: Mapped[str]
-    series_number_meter: Mapped[int]
+    meter_brand: Mapped[str] = mapped_column(nullable=True)
+    series_number_meter: Mapped[int] = mapped_column(nullable=True)
     month_year: Mapped[str] = mapped_column(nullable=True)
     day_month_year: Mapped[str] = mapped_column(nullable=True)
-    unit: Mapped[str]
+    unit: Mapped[str] = mapped_column(nullable=True)
 
     heat_supply_volume: Mapped[float] = mapped_column(DOUBLE_PRECISION, nullable=True)
     heat_reverse_supply_volume: Mapped[float] = mapped_column(DOUBLE_PRECISION, nullable=True)

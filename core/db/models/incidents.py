@@ -14,11 +14,11 @@ class IncidentsModel(BaseModel):
 
     id: Mapped[bigint_pk]
 
-    name: Mapped[str]
-    source: Mapped[str]
-    external_system_creation_date: Mapped[date_with_timezone]
-    closed_at: Mapped[date_with_timezone]
-    area: Mapped[str]
-    unom: Mapped[int] = mapped_column(BIGINT)
-    address: Mapped[str]
-    external_system_closed_date: Mapped[date_with_timezone]
+    name: Mapped[str] = mapped_column(nullable=True)
+    source: Mapped[str] = mapped_column(nullable=True)
+    external_system_creation_date: Mapped[date_with_timezone] = mapped_column(nullable=True)
+    closed_at: Mapped[date_with_timezone] = mapped_column(nullable=True)
+    area: Mapped[str] = mapped_column(nullable=True)
+    unom: Mapped[int] = mapped_column(BIGINT, nullable=True)
+    address: Mapped[str] = mapped_column(nullable=True)
+    external_system_closed_date: Mapped[date_with_timezone] = mapped_column(nullable=True)

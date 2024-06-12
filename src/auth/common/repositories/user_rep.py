@@ -7,7 +7,6 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
 
-from core.db.models.role import RoleModel
 from core.db.models.user import UserModel
 from src.auth.common.interfacies.user_protocol import UserContainer
 from src.auth.common.schemas import PartialUserUpdateSchema
@@ -52,8 +51,6 @@ class UserRepository(UserContainer):
         query = await self.session.execute(
             select(
                 UserModel,
-            ).options(
-                selectinload(UserModel.roles).subqueryload(RoleModel.permissions)
             ).filter_by(id=user_id)
         )
 

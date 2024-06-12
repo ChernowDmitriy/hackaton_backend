@@ -13,14 +13,15 @@ class PlannedUnplannedShutdownsModel(BaseModel):
 
     id: Mapped[bigint_pk]
 
-    cause: Mapped[str]
-    source: Mapped[str]
-    registration_disconnection_date: Mapped[date_with_timezone]
-    planned_shutdown_date: Mapped[date_with_timezone]
-    planned_switch_on_date: Mapped[date_with_timezone]
-    actual_shutdown_date: Mapped[date_with_timezone]
-    actual_switch_on_date: Mapped[date_with_timezone]
+    cause: Mapped[str] = mapped_column(nullable=True)
+    source: Mapped[str] = mapped_column(nullable=True)
 
-    shutdown_type: Mapped[str]
-    unom: Mapped[int] = mapped_column(BIGINT)
-    address: Mapped[date_with_timezone]
+    registration_disconnection_date: Mapped[date_with_timezone] = mapped_column(nullable=True)
+    planned_shutdown_date: Mapped[date_with_timezone] = mapped_column(nullable=True)
+    planned_switch_on_date: Mapped[date_with_timezone] = mapped_column(nullable=True)
+    actual_shutdown_date: Mapped[date_with_timezone] = mapped_column(nullable=True)
+    actual_switch_on_date: Mapped[date_with_timezone] = mapped_column(nullable=True)
+
+    shutdown_type: Mapped[str] = mapped_column(nullable=True)
+    unom: Mapped[int] = mapped_column(BIGINT, nullable=True)
+    address: Mapped[str] = mapped_column(nullable=True)
