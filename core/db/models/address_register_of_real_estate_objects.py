@@ -7,10 +7,11 @@ from core.db.base import BaseModel, bigint_pk
 class AddressRegisterOfRealEstateObjectsModel(BaseModel):
     __tablename__ = "address_register_of_real_estate_objects"
 
-    global_id: Mapped[bigint_pk]
+    useless_id: Mapped[bigint_pk]
+    global_id: Mapped[int] = mapped_column(BIGINT, nullable=True)
 
     obj_type: Mapped[str] = mapped_column(nullable=True)
-    OnTerritoryOfMoscow: Mapped[bool] = mapped_column(nullable=True)
+    OnTerritoryOfMoscow: Mapped[str] = mapped_column(nullable=True)
     address: Mapped[str] = mapped_column(nullable=True)
     unom: Mapped[int] = mapped_column(BIGINT, nullable=True)
     P1: Mapped[str] = mapped_column(nullable=True)
@@ -28,9 +29,12 @@ class AddressRegisterOfRealEstateObjectsModel(BaseModel):
     p0: Mapped[str] = mapped_column(nullable=True)
     l2_value: Mapped[str] = mapped_column(nullable=True)
     l3_type: Mapped[str] = mapped_column(nullable=True)
+    P2: Mapped[str] = mapped_column(nullable=True)
     l3_value: Mapped[str] = mapped_column(nullable=True)
     l4_type: Mapped[str] = mapped_column(nullable=True)
+    l4_value: Mapped[str] = mapped_column(nullable=True)
     l5_type: Mapped[str] = mapped_column(nullable=True)
+    l5_value: Mapped[str] = mapped_column(nullable=True)
     adm_area: Mapped[str] = mapped_column(nullable=True)
     district: Mapped[str] = mapped_column(nullable=True)
     nreg: Mapped[str] = mapped_column(nullable=True)

@@ -1,3 +1,7 @@
+"""
+14.xlsx
+"""
+
 from sqlalchemy import BIGINT
 from sqlalchemy.orm import Mapped, mapped_column
 
@@ -10,7 +14,7 @@ class EconomicCharacteristicHouseModel(BaseModel):
     id: Mapped[bigint_pk]
     name: Mapped[str] = mapped_column(nullable=True)
     address: Mapped[str] = mapped_column(nullable=True)
-    unom: Mapped[str] = mapped_column(nullable=True)
+    unom: Mapped[int] = mapped_column(nullable=True)
     district: Mapped[str] = mapped_column(nullable=True)
     area: Mapped[str] = mapped_column(nullable=True)
     col_758: Mapped[int] = mapped_column(BIGINT, nullable=True)
