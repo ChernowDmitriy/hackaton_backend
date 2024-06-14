@@ -1,7 +1,7 @@
 from pydantic import BaseModel
 
 
-class UploadImageSchemaInput(BaseModel):
+class UploadDatasetSchemaInput(BaseModel):
     name: str
     path: str
     ext: str

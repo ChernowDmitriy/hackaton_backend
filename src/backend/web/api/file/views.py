@@ -1,9 +1,7 @@
-import asyncio
+from fastapi import APIRouter, UploadFile, BackgroundTasks, Depends
 
-import aiofiles
-
-from fastapi import APIRouter, UploadFile, File
-
+from src.backend.common.interfaces.file import IUploadFileUseCase
+from src.backend.services.file.dependencies import get_file_uploader_use_case
 
 router = APIRouter()
 
@@ -11,16 +9,13 @@ router = APIRouter()
 @router.post("/test",
              description="Загрузить датасет")
 async def upload_file(
-        file: UploadFile = File(...),
+        background_tasks: BackgroundTasks,
+        files: list[UploadFile],
+        use_case: IUploadFileUseCase = Depends(get_file_uploader_use_case)
 ):
-    # Save the uploaded file to disk
-    # async with aiofiles.open(f"/tmp/{file.filename}", 'wb') as out_file:
-    #     content = await file.read()  # async read
-    #     await out_file.write(content)  # async write
+    for file in files:
+        content = await file.read()
+        await use_case.upload_file(file, content)
+        # background_tasks.add_task(use_case.upload_file, file, content)
 
-    # Enqueue the task to process the file
-    # await process_file.kiq(f"/tmp/{file.filename}")
-    task = await add_one.kiq(1)
-    # Wait for the result.
-    result = await task.wait_result(timeout=2)
-    return {"filename": file.filename, "status": "File uploaded and processing started"}
+    return {"filenames": [file.filename for file in files]}
