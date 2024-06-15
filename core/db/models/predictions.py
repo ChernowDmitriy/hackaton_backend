@@ -38,5 +38,5 @@ class PredictionsModel(BaseModel):
     roofing_material_bti: Mapped[float] = mapped_column(DOUBLE_PRECISION, nullable=True)
     mkd_status: Mapped[float] = mapped_column(DOUBLE_PRECISION, nullable=True)
     predictions: Mapped[int] = mapped_column(nullable=True)
-    predicted_labels: Mapped[int] = mapped_column(nullable=True)
+    predicted_labels: Mapped[str] = mapped_column(nullable=True)
     prediction_title: Mapped[str] = mapped_column(nullable=True)
