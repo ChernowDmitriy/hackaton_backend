@@ -4,7 +4,7 @@ from sqlalchemy.orm import Mapped, mapped_column
 from core.db.base import BaseModel, bigint_pk
 
 
-class PredictionsModel(BaseModel):
+class PredictionModel(BaseModel):
     __tablename__ = "predictions"
 
     id: Mapped[bigint_pk]

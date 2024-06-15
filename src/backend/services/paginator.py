@@ -27,27 +27,13 @@ class Paginator(Generic[T]):
         self.session = session
         self.base_url = base_url
 
-    async def paginate(self) -> PaginationResponse:
-        offset = (self.params.page - 1) * self.params.page_size
-        total_query = select(func.count()).select_from(self.query.subquery())
-        total_result = await self.session.execute(total_query)
-        total = total_result.scalar_one()
+        self.total = None
+        self.total_result = None
+        self.total_query = None
+        self.offset = None
 
-        if total == 0:
-            return PaginationResponse(
-                next_page="",
-                previous_page="",
-                pages_count=0,
-                count=0,
-                data=[]
-            )
-
-        items = await self.session.scalars(
-            self.query.offset(offset).limit(self.params.page_size)
-        )
-        items = items.all()
-
-        next_page = self.params.page + 1 if total > offset + self.params.page_size else None
+    def build_response(self, dataset):
+        next_page = self.params.page + 1 if self.total > self.offset + self.params.page_size else None
         prev_page = self.params.page - 1 if self.params.page > 1 else None
 
         next_page_url = f"{self.base_url}?page={next_page}&page_size={self.params.page_size}" if next_page else None
@@ -56,7 +42,27 @@ class Paginator(Generic[T]):
         return PaginationResponse(
             next_page=next_page_url,
             previous_page=prev_page_url,
-            pages_count=(total + self.params.page_size - 1) // self.params.page_size,
-            count=total,
-            data=items
+            pages_count=(self.total + self.params.page_size - 1) // self.params.page_size,
+            count=self.total,
+            data=dataset
         )
+
+    async def paginate(self):
+        self.offset = (self.params.page - 1) * self.params.page_size
+        self.total_query = select(func.count()).select_from(self.query.subquery())
+        self.total_result = await self.session.execute(self.total_query)
+        self.total = self.total_result.scalar_one()
+
+        if self.total == 0:
+            return PaginationResponse(
+                next_page="",
+                previous_page="",
+                pages_count=0,
+                count=0,
+                data=[]
+            )
+
+        items = await self.session.execute(
+            self.query.offset(self.offset).limit(self.params.page_size)
+        )
+        return items
