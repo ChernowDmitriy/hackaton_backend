@@ -39,3 +39,4 @@ class PredictionsModel(BaseModel):
     mkd_status: Mapped[float] = mapped_column(DOUBLE_PRECISION, nullable=True)
     predictions: Mapped[int] = mapped_column(nullable=True)
     predicted_labels: Mapped[int] = mapped_column(nullable=True)
+    prediction_title: Mapped[str] = mapped_column(nullable=True)
