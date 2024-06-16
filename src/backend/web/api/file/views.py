@@ -7,7 +7,8 @@ router = APIRouter()
 
 
 @router.post("/test",
-             description="Загрузить датасет")
+             description="Загрузить датасет",
+             include_in_schema=False)
 async def upload_file(
         background_tasks: BackgroundTasks,
         files: list[UploadFile],
