@@ -33,14 +33,14 @@ class SecurityService:
         iat = datetime.utcnow()
 
         access_token_payload = {
-            "sub": str(user.id),
+            "sub": int(user.id),
             "grant_type": JWTGrantType.ACCESS_TOKEN,
             "exp": exp_access,
             "iat": iat,
         }
 
         refresh_token_payload = {
-            "sub": str(user.id),
+            "sub": int(user.id),
             "exp": exp_refresh,
             "grant_type": JWTGrantType.REFRESH_TOKEN,
             "iat": iat,
