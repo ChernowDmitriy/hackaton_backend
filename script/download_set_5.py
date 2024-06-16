@@ -1,5 +1,3 @@
-from datetime import datetime
-
 import pandas as pd
 import ujson
 from sqlalchemy import create_engine, Insert
@@ -30,7 +28,7 @@ def download_set_5(file_path):
             } for index, row in enumerate(set_5.iloc)]
 
     settings = get_settings()
-    engine = create_engine(str(settings.db_url))
+    engine = create_engine(str(settings.db_url_sync))
     Session = sessionmaker(bind=engine)
     session = Session()
     print('Insert is starting...')

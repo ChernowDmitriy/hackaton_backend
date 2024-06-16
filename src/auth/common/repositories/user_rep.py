@@ -42,7 +42,7 @@ class UserRepository(UserContainer):
             setattr(user, key, value)
         self.session.add(user)
 
-    async def get_user(self, user_id: uuid.UUID) -> Type[UserModel] | None:
+    async def get_user(self, user_id: int) -> Type[UserModel] | None:
         """
         Getting a user object with roles and permissions
         @param user_id: user ID
@@ -51,7 +51,7 @@ class UserRepository(UserContainer):
         query = await self.session.execute(
             select(
                 UserModel,
-            ).filter_by(id=user_id)
+            ).filter_by(id=int(user_id))
         )
 
         return query.scalar_one_or_none()
