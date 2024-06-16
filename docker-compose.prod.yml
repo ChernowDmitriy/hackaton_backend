@@ -36,7 +36,7 @@ services:
       - rabbitmq_data:/var/lib/rabbitmq
 
   db:
-    build: ./postgresql
+    image: postgres:16
     container_name: db
     ports:
       - "15432:5432"
@@ -45,7 +45,6 @@ services:
       - POSTGRES_PASSWORD=KamxnJAnmxiiiiUIUUU
       - POSTGRES_DB=hackaton_hackaton
     volumes:
-      - ./postgresql/postgresql.conf:/etc/postgresql/postgresql.conf
       - postgres_data:/var/lib/postgresql/data
 
   nginx:
