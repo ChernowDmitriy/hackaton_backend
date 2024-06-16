@@ -38,6 +38,9 @@ class Paginator(Generic[T]):
 
         next_page_url = f"{self.base_url}?page={next_page}&page_size={self.params.page_size}" if next_page else None
         prev_page_url = f"{self.base_url}?page={prev_page}&page_size={self.params.page_size}" if prev_page else None
+        if "?" in self.base_url:
+            next_page_url = f"{self.base_url}&page={next_page}&page_size={self.params.page_size}" if next_page else None
+            prev_page_url = f"{self.base_url}&page={prev_page}&page_size={self.params.page_size}" if prev_page else None
 
         return PaginationResponse(
             next_page=next_page_url,
