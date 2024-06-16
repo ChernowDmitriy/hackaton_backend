@@ -9,10 +9,6 @@ class CoordReader(ABC):
     async def list_unom_with_coord(self, **kwargs) -> List[AddressModel]:
         ...
 
-    @abstractmethod
-    async def coord_item(self) -> AddressModel:
-        ...
-
 
 class CoordReaderUseCase(ABC):
     @abstractmethod

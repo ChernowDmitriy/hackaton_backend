@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Optional, List
 
 from fastapi import APIRouter, Depends, Request
 
@@ -10,7 +10,7 @@ from src.backend.web.api.prediction.schemas import PredictionsPaginationParams, 
 router = APIRouter()
 
 
-@router.get("")
+@router.get("", response_model=List[PredictionSchemaOutput])
 async def get_predictions(
         request: Request,
         page: Optional[int] = 1,
@@ -23,7 +23,7 @@ async def get_predictions(
     )
     paginated_result = await use_case.list_predictions_with_coords(request=request, pagination_params=pagination_params)
     data = []
-    for prediction, coordinates in paginated_result.data:
+    for prediction, coordinates, adr_objs in paginated_result.data:
         data.append(
             PredictionSchemaOutput(
                 id=prediction.id,
@@ -62,11 +62,12 @@ async def get_predictions(
                 occurrence_day=prediction.occurrence_day,
                 predicted_label=prediction.predicted_label,
                 prediction_title=prediction.prediction_title,
+                address=adr_objs.address,
                 coordinates=CoordinatesSchema(
                     latitude=coordinates.latitude,
                     longitude=coordinates.longitude
                 )
-            ).model_dump(exclude_none=True)
+            )
         )
     paginated_result.data = data
     return paginated_result

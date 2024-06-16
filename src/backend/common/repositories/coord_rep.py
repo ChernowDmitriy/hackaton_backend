@@ -1,5 +1,3 @@
-from typing import Sequence
-
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import aliased
@@ -9,7 +7,7 @@ from src.backend.common.interfaces.coord import CoordReader
 from src.backend.services.paginator import Paginator, PaginationResponse
 
 
-class AddressReaderRep(CoordReader):
+class CoordinatesReaderRep(CoordReader):
     def __init__(self, session: AsyncSession):
         self.session = session
         self.paginator = Paginator
@@ -28,6 +26,3 @@ class AddressReaderRep(CoordReader):
         paginated_query_result = await paginator.paginate()
         paginated_response = paginator.build_response(paginated_query_result.scalars().all())
         return paginated_response
-
-    async def coord_item(self) -> AddressModel:
-        pass

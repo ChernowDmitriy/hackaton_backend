@@ -47,6 +47,7 @@ class PredictionSchemaOutput(BaseModel):
     occurrence_day: Optional[int] = Field(None)
     predicted_label: Optional[str] = Field(None)
     prediction_title: Optional[str] = Field(None)
+    address: Optional[str] = Field(None)
     coordinates: CoordinatesSchema
 
 
