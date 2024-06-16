@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Optional, Union, List
 
 from fastapi import APIRouter, Depends, Request
 
@@ -15,6 +15,7 @@ router = APIRouter()
 async def get_predictions(
         request: Request,
         address: Optional[str] = None,
+        area: Optional[str] = None,
         page: Optional[int] = 1,
         page_size: Optional[int] = 30,
         use_case: IPredictionReaderUseCase = Depends(get_prediction_reader_use_case)
@@ -25,7 +26,8 @@ async def get_predictions(
     )
     paginated_result = await use_case.list_predictions_with_coords(request=request,
                                                                    pagination_params=pagination_params,
-                                                                   address=address)
+                                                                   address=address,
+                                                                   areas=area)
     if not paginated_result.count:
         return paginated_result
     data = [
@@ -74,4 +76,8 @@ async def get_predictions(
         ) for prediction, coordinates, adr_objs in paginated_result.data
     ]
     paginated_result.data = data
+    available_areas = await use_case.get_list_available_areas()
+    paginated_result.metadata = {
+        "available_areas": available_areas
+    }
     return paginated_result

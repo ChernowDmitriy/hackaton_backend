@@ -1,4 +1,4 @@
-from typing import TypeVar, Annotated, Optional, Generic
+from typing import TypeVar, Annotated, Optional, Generic, Any
 
 from pydantic import BaseModel, Field
 from sqlalchemy import select, func
@@ -18,6 +18,7 @@ class PaginationResponse(BaseModel):
     pages_count: int
     count: int
     data: list
+    metadata: Optional[Any] = Field(None)
 
 
 class Paginator(Generic[T]):

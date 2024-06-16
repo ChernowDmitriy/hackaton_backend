@@ -22,6 +22,7 @@ class PredictionReaderRep(PredictionReader):
         pagination_params = kwargs.get('pagination_params')
         request = kwargs.get('request')
         search_address = kwargs.get('address')
+        area = kwargs.get("areas")
 
         base_url = f'{request.base_url}api/v1/predictions'
 
@@ -40,6 +41,13 @@ class PredictionReaderRep(PredictionReader):
             stmt = stmt.filter(adr_obj.address.ilike(f"%{search_address}%"))
             base_url = base_url + f"?address={search_address}"
 
+        if area:
+            stmt = stmt.filter(p.area.ilike(f"%{area}%"))
+            if "?" in base_url:
+                base_url = base_url + f"&area={area}"
+            else:
+                base_url = base_url + f"?area={area}"
+
         paginator = self.paginator(stmt,
                                    pagination_params,
                                    self.session,
@@ -49,3 +57,9 @@ class PredictionReaderRep(PredictionReader):
             return paginated_query_result
         paginated_response = paginator.build_response(paginated_query_result.fetchall())
         return paginated_response
+
+    async def get_list_available_areas(self, *args, **kwargs):
+        p = aliased(PredictionModel)
+        stmt = select(p.area)
+        result = await self.session.scalars(stmt)
+        return result.all()
