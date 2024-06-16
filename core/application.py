@@ -31,7 +31,7 @@ def get_app() -> FastAPI:
     app = FastAPI(
         title="Hackaton Backend",
         docs_url=None,
-        # dependencies=[Depends(JWTBearer())],
+        dependencies=[Depends(JWTBearer())],
         redoc_url=None,
         openapi_url="/api/v1/openapi.json",
         default_response_class=UJSONResponse,
