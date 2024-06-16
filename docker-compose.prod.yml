@@ -7,7 +7,6 @@ services:
       - "8000:8000"
     build:
       context: .
-      target: dev
     env_file:
       - .env
     volumes:
@@ -37,15 +36,16 @@ services:
       - rabbitmq_data:/var/lib/rabbitmq
 
   db:
-    image: postgres:16
+    build: ./postgresql
     container_name: db
     ports:
       - "15432:5432"
     environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=hackaton
+      - POSTGRES_USER=notAdmin3287111
+      - POSTGRES_PASSWORD=KamxnJAnmxiiiiUIUUU
+      - POSTGRES_DB=hackaton_hackaton
     volumes:
+      - ./postgresql/postgresql.conf:/etc/postgresql/postgresql.conf
       - postgres_data:/var/lib/postgresql/data
 
   nginx:
