@@ -3,6 +3,7 @@ from typing import Optional, List
 from fastapi import APIRouter, Depends, Request
 
 from src.backend.common.interfaces.prediction import IPredictionReaderUseCase
+from src.backend.services.paginator import PaginationResponse
 from src.backend.services.prediction.dependencies import get_prediction_reader_use_case
 from src.backend.web.api.prediction.schemas import PredictionsPaginationParams, PredictionSchemaOutput, \
     CoordinatesSchema
@@ -10,7 +11,7 @@ from src.backend.web.api.prediction.schemas import PredictionsPaginationParams, 
 router = APIRouter()
 
 
-@router.get("", response_model=List[PredictionSchemaOutput])
+@router.get("", response_model=PaginationResponse)
 async def get_predictions(
         request: Request,
         page: Optional[int] = 1,
