@@ -8,7 +8,7 @@ class PredictionModel(BaseModel):
 
     id: Mapped[bigint_pk]
 
-    unom: Mapped[int] = mapped_column(nullable=True)
+    unom: Mapped[int] = mapped_column(nullable=True, index=True)
     district: Mapped[str] = mapped_column(nullable=True)
     building_material: Mapped[str] = mapped_column(nullable=True)
     building_assignment: Mapped[str] = mapped_column(nullable=True)

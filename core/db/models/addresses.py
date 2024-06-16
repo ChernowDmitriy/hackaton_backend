@@ -8,6 +8,6 @@ class AddressModel(BaseModel):
 
     id: Mapped[bigint_pk]
 
-    unom: Mapped[int] = mapped_column(nullable=True)
+    unom: Mapped[int] = mapped_column(nullable=True, index=True)
     latitude: Mapped[str] = mapped_column(nullable=True)
     longitude: Mapped[str] = mapped_column(nullable=True)
