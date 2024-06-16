@@ -12,6 +12,9 @@ def convert_to_datetime(date_str, date_format="%Y-%m-%d %H:%M:%S.%f"):
 
 
 def strfloat_to_int(value):
-    if value == "nan":
+    try:
+        if value == "nan":
+            return None
+        return int(float(value))
+    except:
         return None
-    return int(float(value))
