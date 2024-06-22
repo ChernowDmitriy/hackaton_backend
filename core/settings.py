@@ -28,26 +28,26 @@ class Settings(BaseSettings):
     """
 
     # Application
-    HOST: str
-    PORT: int
-    WORKERS: int
-    RELOAD: bool
-    ENVIRONMENT: str
+    HOST: str = "0.0.0.0"
+    PORT: int = 8000
+    WORKERS: int = 1
+    RELOAD: bool = True
+    ENVIRONMENT: str = "dev"
     API_PREFIX: str = "/api/v1"
 
     # Database
-    DB_HOST: str
-    DB_PORT: int
-    DB_USER: str
-    DB_PASS: str
-    DB_BASE: str
-    DB_ECHO: bool
+    DB_HOST: str = "213.171.28.212"
+    DB_PORT: int = 15432
+    DB_USER: str = "notAdmin3287111"
+    DB_PASS: str = "KamxnJAnmxiiiiUIUUU"
+    DB_BASE: str = "hackaton_hackaton"
+    DB_ECHO: bool = False
 
     # RABBITMQ
-    RABBIT_HOST: str
-    RABBIT_PORT: int
-    RABBIT_USER: str
-    RABBIT_PASS: str
+    RABBIT_HOST: str = "rabbitmq"
+    RABBIT_PORT: int = "5672"
+    RABBIT_USER: str = "friendly_user"
+    RABBIT_PASS: str = "123456Aa"
     RABBIT_VHOST: str = '/'
     rabbit_pool_size: int = 10
     rabbit_channel_pool_size: int = 10
@@ -58,7 +58,7 @@ class Settings(BaseSettings):
     REFRESH_TOKEN_EXPIRE: int = 60 * 24 * 30  # 30 days
 
     # Security
-    JWT_SECRET_KEY: str
+    JWT_SECRET_KEY: str = "1234567890wsdefghjk"
 
     @property
     def db_url(self) -> URL:
@@ -69,6 +69,22 @@ class Settings(BaseSettings):
         """
         return URL.build(
             scheme="postgresql+asyncpg",
+            host=self.DB_HOST,
+            port=self.DB_PORT,
+            user=self.DB_USER,
+            password=self.DB_PASS,
+            path=f"/{self.DB_BASE}",
+        )
+
+    @property
+    def db_url_sync(self) -> URL:
+        """
+        Assemble database URL from settings.
+
+        :return: database URL.
+        """
+        return URL.build(
+            scheme="postgresql",
             host=self.DB_HOST,
             port=self.DB_PORT,
             user=self.DB_USER,

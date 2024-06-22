@@ -17,5 +17,3 @@ class ReactionsModel(BaseModel):
     consumer: Mapped[str] = mapped_column(nullable=True)
     geodata_y: Mapped[str] = mapped_column(nullable=True)
     geodata_center_y: Mapped[str] = mapped_column(nullable=True)
-
-
